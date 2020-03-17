@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mwp-message-center
+  namespace: default
+  labels:
+    app: mwp-message-center
+spec:
+  selector:
+    matchLabels:
+      app: mwp-message-center
+  template:
+    metadata:
+      labels:
+        app: mwp-message-center
+    spec:
+      imagePullSecrets:
+        - name: cs-harbor
+      containers:
+        - name: mwp-message-center
+          image:  cs-harbor.sunvalley.com.cn/internal/<PROJECT_NAME>:<BUILD_TAG>
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 42020
+              name: java-proxy
+              protocol: TCP
